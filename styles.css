@@ -16,23 +16,6 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   color-scheme: dark;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f6f1e9;
-    --surface: #ffffff;
-    --surface-2: #efe8dd;
-    --line: #e2d8c9;
-    --text: #23190f;
-    --muted: #7a6c5a;
-    --accent: #c47a12;
-    --accent-ink: #ffffff;
-    --good: #3f8a2c;
-    --day: #e8dfd1;
-    --day-done: #d88a1c;
-    color-scheme: light;
-  }
-}
-
 [hidden] { display: none !important; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; background: var(--bg); color: var(--text); }
