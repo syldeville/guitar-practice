@@ -123,9 +123,12 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: 
 .cal .d.today { outline: 2px solid var(--text); outline-offset: 1px; }
 .cal .d.future { opacity: .35; }
 .cal .pad { visibility: hidden; }
-.year { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; }
-.year i { aspect-ratio: 1; border-radius: 2px; background: var(--day); }
-.year i.on { background: var(--day-done); }
+.graph { display: grid; grid-template-rows: auto repeat(7, 1fr); gap: 3px; align-items: center; }
+.graph i { aspect-ratio: 1; border-radius: 2px; background: var(--day); }
+.graph i.on { background: var(--day-done); }
+.graph i.now { outline: 1.5px solid var(--text); outline-offset: 0; }
+.graph .gm { grid-row: 1; font-size: 10px; color: var(--muted); white-space: nowrap; overflow: visible; width: 0; }
+.graph .gd { grid-column: 1; font-size: 9px; color: var(--muted); padding-right: 4px; line-height: 1; }
 
 /* Sheet (dialog) */
 dialog {

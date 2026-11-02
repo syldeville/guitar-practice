@@ -253,11 +253,26 @@
     const now = new Date();
     const isCurrentMonth = y === now.getFullYear() && m === now.getMonth();
 
-    // last 26 weeks strip
-    const strip = [];
-    const start = new Date(); start.setDate(start.getDate() - 175 - ((start.getDay() + 6) % 7)); // Monday, 26 weeks back
-    const span = Math.round((new Date() - start) / 86400000) + 1;
-    for (let i = 0; i < span; i++) { const d = new Date(start); d.setDate(start.getDate() + i); strip.push(state.days[dayKey(d)] ? 'on' : ''); }
+    // GitHub-style contribution graph: one column per week (oldest → newest, left → right),
+    // rows Sunday → Saturday, month names along the top.
+    const WEEKS = 26;
+    const today = new Date(); today.setHours(12, 0, 0, 0);
+    const gStart = new Date(today); gStart.setDate(today.getDate() - today.getDay() - (WEEKS - 1) * 7);
+    let graph = '';
+    let lastMonth = -1;
+    for (let w = 0; w < WEEKS; w++) {
+      for (let dow = 0; dow < 7; dow++) {
+        const d = new Date(gStart); d.setDate(gStart.getDate() + w * 7 + dow);
+        if (d > today) break;
+        const k = dayKey(d);
+        if (d.getMonth() !== lastMonth && d.getDate() <= 7 && dow === 0) {
+          graph += `<span class="gm" style="grid-column:${w + 2}">${d.toLocaleDateString(undefined, { month: 'short' })}</span>`;
+          lastMonth = d.getMonth();
+        }
+        graph += `<i class="${state.days[k] ? 'on' : ''} ${k === tk ? 'now' : ''}" style="grid-column:${w + 2};grid-row:${dow + 2}" title="${k}"></i>`;
+      }
+    }
+    graph += ['Mon', 'Wed', 'Fri'].map((t, i) => `<span class="gd" style="grid-row:${i * 2 + 3}">${t}</span>`).join('');
 
     $view.innerHTML = `
       <button class="btn primary today-btn ${did ? 'done' : ''}" id="logToday">${did ? '✓ Practiced today' : 'I practiced today'}</button>
@@ -285,7 +300,7 @@
       <p class="small muted" style="text-align:center">Tap a past day to add or remove it.</p>
 
       <h2>Last 6 months</h2>
-      <div class="card"><div class="year">${strip.map((c) => `<i class="${c}"></i>`).join('')}</div></div>
+      <div class="card"><div class="graph" style="grid-template-columns:auto repeat(${WEEKS},1fr)">${graph}</div></div>
     `;
 
     document.getElementById('logToday').addEventListener('click', () => {

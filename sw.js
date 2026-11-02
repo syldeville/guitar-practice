@@ -1,5 +1,5 @@
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'fretlog-v2';
+const VERSION = 'fretlog-v3';
 const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'levels.js', 'manifest.webmanifest',
   'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
